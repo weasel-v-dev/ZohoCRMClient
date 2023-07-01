@@ -137,7 +137,7 @@
                         >
                             <v-select
                                 v-model="accountType"
-                                :items="['item 1','item 2']"
+                                :items="['Customer']"
                                 :error-messages="errors"
                                 label="Account type"
                                 data-vv-name="select"

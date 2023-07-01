@@ -25,8 +25,7 @@ class HomeController extends BaseController
     public function store(ZohoClientRequest $request) {
         $data = $request->validated();
 
-
-        return $this->account->create([
+        dd($this->account->create([
             "Account_Name" => $data['accountName'],
             "Account_Owner" => $data['accountOwner'],
             "Account_Type" => $data['accountType'],
@@ -36,6 +35,6 @@ class HomeController extends BaseController
             "Email" => $data['email'],
             "Website" => $data['website'],
             "Industry" => $data['industry']
-        ]);
+        ]));
     }
 }
