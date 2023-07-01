@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\ZohoCRM\Auth;
+namespace App\Services\ZohoCRM;
 
 use App\Components\HttpAPI;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
-class TokenService
+abstract class BaseAPI
 {
-    const AUTHENTICATION_FAILURE = 'AUTHENTICATION_FAILURE';
-    public static function refresh()
+
+    protected function refresh()
     {
         $refresh_token = Auth::user()->refresh_token;
 
@@ -27,5 +27,20 @@ class TokenService
         $access_token = json_decode($response->getBody()->getContents(), true)['access_token'];
 
         Auth::user()->update(['access_token' => $access_token]);
+    }
+
+    protected function sendRequest($url, $data) {
+        $access_token = Auth::user()->access_token;
+
+        dump('AccountService::sendRequest', $access_token);
+
+        dump($data);
+
+        return Http::withHeaders([
+            "Authorization" => "Bearer $access_token",
+            'Content-Type' => 'application/x-www-form-urlencoded'
+        ])->post($url, ["data" => [
+            $data
+        ]])->json();
     }
 }

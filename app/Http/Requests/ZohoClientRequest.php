@@ -29,7 +29,7 @@ class ZohoClientRequest extends FormRequest
             'amount' => 'required|max:50',
             'stage' => 'required|max:25',
             'closingDate' => 'required|date',
-            'probability' => 'required|max:50',
+            'probability' => 'required|max:3',
             'dealDescription'  => 'required|max:500',
             'accountName' => 'required|max:50',
             'accountOwner' => 'required|max:50',

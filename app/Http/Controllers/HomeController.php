@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ZohoClientRequest;
-use App\Http\Resources\AccountResource;
-use App\Services\ZohoCRM\Account\AccountService;
+use App\Services\ZohoCRM\ZohoCRMFacade;
 
-class HomeController extends BaseController
+class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(AccountService $account)
+    public function __construct()
     {
-        parent::__construct($account);
         $this->middleware('auth');
     }
     public function index()
@@ -25,16 +23,9 @@ class HomeController extends BaseController
     public function store(ZohoClientRequest $request) {
         $data = $request->validated();
 
-        dd($this->account->create([
-            "Account_Name" => $data['accountName'],
-            "Account_Owner" => $data['accountOwner'],
-            "Account_Type" => $data['accountType'],
-            "Billing_Address" => $data['billingAddress'],
-            "Shipping_Address" => $data['shippingAddress'],
-            "Phone" => $data['phone'],
-            "Email" => $data['email'],
-            "Website" => $data['website'],
-            "Industry" => $data['industry']
-        ]));
+        $zohoCRM = new ZohoCRMFacade();
+        $response = $zohoCRM->init($data);
+
+        return response()->json(['response' => $response]);
     }
 }

@@ -2,12 +2,7 @@
 
 namespace App\Providers;
 
-
-use App\Observers\CompanyObserver;
-use App\Observers\EmployeeObserver;
-use App\Observers\PositionObserver;
-use App\Observers\ReviewerObserver;
-use App\Services\ZohoCRM\Deal\DealService;
+use App\Services\ZohoCRM\ZohoCRMFacade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,8 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(DealService::class, function () {
-            return new DealService();
+        $this->app->bind(ZohoCRMFacade::class, function () {
+            return new ZohoCRMFacade();
         });
     }
 
