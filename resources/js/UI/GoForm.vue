@@ -80,7 +80,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="Probability"
-                            rules="required|max:50"
+                            rules="required|max:3|min_value:0|max_value:100"
                         >
                             <v-text-field
                                 v-model="probability"
@@ -260,7 +260,7 @@
 </template>
 
 <script>
-import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
+import { required, digits, email, max, max_value, min_value, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 
 setInteractionMode('eager')
@@ -288,6 +288,16 @@ extend('regex', {
 extend('email', {
     ...email,
     message: 'Email must be valid',
+})
+
+extend('max_value', {
+    ...max_value,
+    message: '{_value_} must be not more than 100',
+})
+
+extend('min_value', {
+    ...min_value,
+    message: '{_value_} must be not less than 0',
 })
 export default {
     components: {
