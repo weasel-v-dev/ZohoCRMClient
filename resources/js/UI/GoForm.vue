@@ -256,6 +256,9 @@
                     </div>
                 </div>
             </form>
+            <div>
+                {{ info }}
+            </div>
         </validation-observer>
 </template>
 
@@ -327,7 +330,8 @@ export default {
 
 
         checkbox: null,
-        triggerModalDate: false
+        triggerModalDate: false,
+        info: ''
     }),
 
     methods: {
@@ -359,28 +363,28 @@ export default {
             this.$refs.observer.reset()
         },
         send() {
-            const data = {};
-            data.dealName = this.dealName;
+            const form = {};
+            form.dealName = this.dealName;
 
-            data.dealOwner = this.dealOwner;
-            data.amount = this.amount;
-            data.stage = this.stage;
-            data.closingDate = this.closingDate;
-            data.probability = this.probability;
-            data.dealDescription = this.dealDescription;
+            form.dealOwner = this.dealOwner;
+            form.amount = this.amount;
+            form.stage = this.stage;
+            form.closingDate = this.closingDate;
+            form.probability = this.probability;
+            form.dealDescription = this.dealDescription;
 
 
-            data.accountName = this.accountName;
-            data.accountOwner = this.accountOwner;
-            data.accountType = this.accountType;
-            data.billingAddress = this.billingAddress;
-            data.shippingAddress = this.shippingAddress;
-            data.phone = this.phone;
-            data.email = this.email;
-            data.website = this.website;
-            data.industry = this.industry;
-            axios.post('/account', data).then(function ({ data }){
-                console.log('data', data)
+            form.accountName = this.accountName;
+            form.accountOwner = this.accountOwner;
+            form.accountType = this.accountType;
+            form.billingAddress = this.billingAddress;
+            form.shippingAddress = this.shippingAddress;
+            form.phone = this.phone;
+            form.email = this.email;
+            form.website = this.website;
+            form.industry = this.industry;
+            axios.post('/account', form).then(({ data }) => {
+                this.info = data.response.account.data['0'];
             }).catch(function (rej ) {
                 console.log('rej', rej)
             }).finally(function (mes){

@@ -20,22 +20,20 @@ class ZohoCRMFacade
             "Industry" => $data['industry']
         ]);
 
-        $dealCreatedData = [];
-        foreach ($accountCreatedData['data'] as $el) {
-            $dealCreatedData[] = $deal->create([
-                "Deal_Name" => $data['dealName'],
-                "Account_ID" => $el['details']['id'],
-                "Deal_Owner" => $data['dealOwner'],
-                "Amount" => $data['amount'],
-                "Stage" => $data['stage'],
-                "Closing_Date" => $data['closingDate'],
-                "Probability" => $data['probability'],
-                "Description" => $data['dealDescription']
-            ]);
-        }
+
+        $dealCreatedData = $deal->create([
+            "Deal_Name" => $data['dealName'],
+            "Account_ID" => $accountCreatedData['data']['0']['details']['id'],
+            "Deal_Owner" => $data['dealOwner'],
+            "Amount" => $data['amount'],
+            "Stage" => $data['stage'],
+            "Closing_Date" => $data['closingDate'],
+            "Probability" => $data['probability'],
+            "Description" => $data['dealDescription']
+        ]);
 
         return [
-            "account" => $accountCreatedData,
+            "account" => $dealCreatedData,
             "deal" => $dealCreatedData
         ];
     }

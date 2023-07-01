@@ -5,6 +5,7 @@ namespace App\Services\ZohoCRM;
 use App\Components\HttpAPI;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 abstract class BaseAPI
 {
@@ -31,10 +32,6 @@ abstract class BaseAPI
 
     protected function sendRequest($url, $data) {
         $access_token = Auth::user()->access_token;
-
-        dump('AccountService::sendRequest', $access_token);
-
-        dump($data);
 
         return Http::withHeaders([
             "Authorization" => "Bearer $access_token",
