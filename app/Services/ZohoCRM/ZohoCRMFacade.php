@@ -12,8 +12,8 @@ class ZohoCRMFacade
             "Account_Name" => $data['accountName'],
             "Account_Owner" => $data['accountOwner'],
             "Account_Type" => $data['accountType'],
-            "Billing_Address" => $data['billingAddress'],
-            "Shipping_Address" => $data['shippingAddress'],
+            "Billing_City" => $data['billingStreet'],
+            "Shipping_Street" => $data['shippingStreet'],
             "Phone" => $data['phone'],
             "Email" => $data['email'],
             "Website" => $data['website'],
@@ -23,6 +23,7 @@ class ZohoCRMFacade
 
         $dealCreatedData = $deal->create([
             "Deal_Name" => $data['dealName'],
+            "Account_Name" => $data['accountName'],
             "Account_ID" => $accountCreatedData['data']['0']['details']['id'],
             "Deal_Owner" => $data['dealOwner'],
             "Amount" => $data['amount'],

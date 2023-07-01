@@ -1,5 +1,6 @@
 <template>
-    <validation-observer
+    <div>
+        <validation-observer
             ref="observer"
             v-slot="{ invalid }"
         >
@@ -36,7 +37,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="Amount"
-                            rules="required|max:50"
+                            rules="required|max:50|integer"
                         >
                             <v-text-field
                                 v-model="amount"
@@ -70,6 +71,7 @@
                                 :error-messages="errors"
                                 label="Closing Date"
                                 required
+                                readonly
                                 @click="triggerModalDate = true"
                             ></v-text-field>
                             <div class="position-absolute z-1 start-0">
@@ -133,11 +135,11 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="accountType"
-                            rules="required"
+                            rules="required"sdfdsfdsfdsf
                         >
                             <v-select
                                 v-model="accountType"
-                                :items="['Customer']"
+                                :items="['Existing Business', 'New Business']"
                                 :error-messages="errors"
                                 label="Account type"
                                 data-vv-name="select"
@@ -151,9 +153,9 @@
                             rules="required|max:50"
                         >
                             <v-text-field
-                                v-model="billingAddress"
+                                v-model="billingStreet"
                                 :error-messages="errors"
-                                label="Billing address"
+                                label="Billing street"
                                 required
                             ></v-text-field>
                         </validation-provider>
@@ -164,9 +166,9 @@
                             rules="required|max:50"
                         >
                             <v-text-field
-                                v-model="shippingAddress"
+                                v-model="shippingStreet"
                                 :error-messages="errors"
-                                label="Shipping address"
+                                label="Shipping street"
                                 required
                             ></v-text-field>
                         </validation-provider>
@@ -256,14 +258,46 @@
                     </div>
                 </div>
             </form>
-            <div>
-                {{ info }}
-            </div>
         </validation-observer>
+        <div v-if="account">
+            <v-card
+                class="mx-auto"
+                max-width="344"
+            >
+                <v-card-text>
+                    <div>ID {{ account }}</div>
+                    <p class="text-h4 text--primary">
+                        {{ account.code }}
+                    </p>
+                    <p>{{ account.details.Created_By.name }}</p>
+                    <div class="text--primary">
+                        Created {{  account.details.Created_Time }}
+                    </div>
+                </v-card-text>
+            </v-card>
+        </div>
+        <div v-if="deal">
+            <v-card
+                class="mx-auto"
+                max-width="344"
+            >
+                <v-card-text>
+                    <div>ID {{ deal.id }}</div>
+                    <p class="text-h4 text--primary">
+                        {{ deal.code }}
+                    </p>
+                    <p>{{ deal.details.Created_By.name }}</p>
+                    <div class="text--primary">
+                        Created {{  deal.details.Created_Time }}
+                    </div>
+                </v-card-text>
+            </v-card>
+        </div>
+    </div>
 </template>
 
 <script>
-import { required, digits, email, max, max_value, min_value, regex } from 'vee-validate/dist/rules'
+import { required, digits, email, max, max_value, min_value, integer, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 
 setInteractionMode('eager')
@@ -302,6 +336,12 @@ extend('min_value', {
     ...min_value,
     message: '{_value_} must be not less than 0',
 })
+
+extend('integer', {
+    ...integer,
+    message: '{_value_} must be numbers',
+})
+
 export default {
     components: {
         ValidationProvider,
@@ -321,8 +361,8 @@ export default {
         accountName: '',
         accountOwner: '',
         accountType: '',
-        billingAddress: '',
-        shippingAddress: '',
+        shippingStreet: '',
+        billingStreet: '',
         phone: '',
         email: '',
         website: '',
@@ -331,7 +371,8 @@ export default {
 
         checkbox: null,
         triggerModalDate: false,
-        info: ''
+        account: '',
+        deal: ''
     }),
 
     methods: {
@@ -352,8 +393,8 @@ export default {
             this.accountName = ''
             this.accountOwner = ''
             this.accountType = ''
-            this.billingAddress = ''
-            this.shippingAddress = ''
+            this.shippingStreet = ''
+            this.billingStreet = ''
             this.phone = ''
             this.email = ''
             this.website = ''
@@ -377,14 +418,15 @@ export default {
             form.accountName = this.accountName;
             form.accountOwner = this.accountOwner;
             form.accountType = this.accountType;
-            form.billingAddress = this.billingAddress;
-            form.shippingAddress = this.shippingAddress;
+            form.shippingStreet = this.shippingStreet;
+            form.billingStreet = this.billingStreet;
             form.phone = this.phone;
             form.email = this.email;
             form.website = this.website;
             form.industry = this.industry;
             axios.post('/account', form).then(({ data }) => {
-                this.info = data.response.account.data['0'];
+                this.account = data.response.account.data['0'];
+                this.deal = data.response.deal.data['0'];
             }).catch(function (rej ) {
                 console.log('rej', rej)
             }).finally(function (mes){
