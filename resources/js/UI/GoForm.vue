@@ -661,10 +661,13 @@ export default {
         triggerModalDate: false,
         response: [
             {
+                id: '',
                 status: '',
                 message: '',
+                code: ''
             }
         ],
+        id: 1
     }),
 
     methods: {
@@ -765,19 +768,23 @@ export default {
             axios.post('/account', form).then(({ data }) => {
                 this.validateOfZohoCRM(data, data.response.account);
                 this.validateOfZohoCRM(data, data.response.deal);
-            }).catch(function (rej ) {
-                // console.log('rej', rej.errors)
-                //
-                // for (const error in rej.errors) {
-                //     error
-                // }
-            }).finally(function (mes){
-                console.log('mes', mes)
+            }).catch( (error ) => {
+                if( error.response.data ){
+                    const self = this;
+                    this.response.push({
+                        id: ++self.id,
+                        message: Object.values(error.response.data.errors)[0][0],
+                        status: 'ERROR',
+                        code: 'ERROR'
+                    })
+                    console.log(this.response)
+                }
             })
         },
         validateOfZohoCRM(data, record) {
             if (record.data['0'].code === "INVALID_DATA") {
                 this.response.push({
+                    id: ++this.id,
                     code: record.data['0'].code,
                     status: record.data['0'].status,
                     message: record.data['0'].details.api_name + ': '
@@ -786,13 +793,15 @@ export default {
             }
             else {
                 this.response.push({
+                    id: ++this.id,
                     code: record.data['0'].code,
                     status: record.data['0'].status,
                     message: record.data['0'].message
                 }) ;
                 this.clear();
             }
-        }
+        },
+
     }
 }
 </script>
