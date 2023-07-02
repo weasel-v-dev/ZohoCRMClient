@@ -112,7 +112,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="Probability"
-                            rules="required|max:3|min_value:0|max_value:100"
+                            rules="required|max:3|min_value:0|max_value:100|integer"
                         >
                             <v-text-field
                                 v-model="probability"
@@ -265,7 +265,6 @@
                             name="AccountSite"
                             :rules="{
                       required: true,
-                      regex: 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)'
                     }">
                             <v-text-field
                                 v-model="accountSite"
@@ -332,7 +331,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="billingCode"
-                            rules="required|max:50"
+                            rules="required|max:50|integer"
                         >
                             <v-text-field
                                 v-model="billingCode"
@@ -398,7 +397,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="shippingCode"
-                            rules="required|max:50"
+                            rules="required|max:50|integer"
                         >
                             <v-text-field
                                 v-model="shippingCode"
