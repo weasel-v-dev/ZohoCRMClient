@@ -35,7 +35,7 @@ class ZohoCRMFacade
             "Description" => $data['description'],
 
             'Rating'  => $data['rating'],
-            'TickerSymbol' =>  $data['ticketSymbol'],
+            'Ticker_Symbol' =>  $data['ticketSymbol'],
             'Ownership'  => $data['ownership'],
             'Employees'  => $data['employees'],
             'SIC_Code'  => $data['SICCode'],
@@ -56,7 +56,9 @@ class ZohoCRMFacade
             "Stage" => $data['stage'],
             "Closing_Date" => $data['closingDate'],
             "Probability" => $data['probability'],
-            "Lead_Source" => $data['leadSource']
+            "Lead_Source" => $data['leadSource'],
+            "Next_Step" => $data['Next_Step'],
+            "Expected_Revenue" => $data['Expected_Revenue'],
         ]);
 
         return [

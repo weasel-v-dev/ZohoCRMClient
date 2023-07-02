@@ -58,7 +58,9 @@ class ZohoClientRequest extends FormRequest
             'ticketSymbol'  => 'required|max:100',
             'ownership'  => 'required|max:50',
             'employees'  => 'required|max:9',
-            'SICCode'  => 'required|max:9'
+            'SICCode'  => 'required|max:9',
+            'Next_Step'  => 'required|max:500',
+            'Expected_Revenue'  => 'required|max:9',
         ];
     }
 }

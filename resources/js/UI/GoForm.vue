@@ -139,6 +139,32 @@
 
                         <validation-provider
                             v-slot="{ errors }"
+                            name="Expected_Revenue"
+                            rules="required|max:16|integer"
+                        >
+                            <v-text-field
+                                v-model="Expected_Revenue"
+                                :error-messages="errors"
+                                label="Expected revenue"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="Next_Step"
+                            rules="required|max:500"
+                        >
+                            <v-textarea
+                                v-model="Next_Step"
+                                :error-messages="errors"
+                                label="Next step"
+                                required
+                            ></v-textarea>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
                             name="dealDescription"
                             rules="required|max:500"
                         >
@@ -655,6 +681,8 @@ export default {
         ownership: '',
         employees: '',
         SICCode: '',
+        Expected_Revenue: '',
+        Next_Step: '',
 
 
         checkbox: null,
@@ -718,6 +746,8 @@ export default {
             this.ownership = ''
             this.employees = ''
             this.SICCode = ''
+            this.Expected_Revenue = ''
+            this.Next_Step = ''
 
             this.checkbox = null
             this.$refs.observer.reset()
@@ -758,6 +788,8 @@ export default {
             form.email = this.email;
             form.website = this.website;
             form.industry = this.industry;
+            form.Expected_Revenue = this.Expected_Revenue
+            form.Next_Step = this.Next_Step
 
             form.rating = this.rating;
             form.ticketSymbol = this.ticketSymbol;
