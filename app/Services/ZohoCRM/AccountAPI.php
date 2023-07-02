@@ -15,7 +15,7 @@ class AccountAPI extends BaseAPI
             $this->refresh();
             $result = $this->sendRequest('https://www.zohoapis.eu/crm/v2/Accounts', $data);
             if(!empty($result['status']) && $result['status'] === 'error') {
-                return $result['message'];
+                return $result;
             }
         }
 

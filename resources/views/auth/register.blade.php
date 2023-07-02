@@ -61,6 +61,48 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="refresh_token" class="col-md-4 col-form-label text-md-end">{{ __('Refresh token') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="refresh_token" class="form-control @error('refresh_token') is-invalid @enderror" name="refresh_token" required>
+
+                                @error('refresh_token')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="client_id" class="col-md-4 col-form-label text-md-end">{{ __('Client id') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="client_id" class="form-control @error('client_id') is-invalid @enderror" name="client_id" required>
+
+                                @error('client_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="client_secret" class="col-md-4 col-form-label text-md-end">{{ __('Client secret token') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="client_secret" class="form-control @error('client_secret') is-invalid @enderror" name="client_secret" required>
+
+                                @error('client_secret')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

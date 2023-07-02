@@ -20,7 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'access_token'
+        'access_token',
+        'refresh_token',
+        'client_id',
+        'client_secret'
     ];
 
     /**
@@ -31,6 +34,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+//        'refresh_token',
+//        'access_token',
+//        'client_id',
+//        'client_secret'
     ];
 
     /**

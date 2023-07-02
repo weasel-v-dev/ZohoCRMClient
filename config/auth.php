@@ -106,9 +106,5 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
-
-    'client_id' => env('CLIENT_ID', "1000.WW4YTKRH37HK1VNXMDU56V6HSFUKLB"),
-
-    'client_secret' => env('CLIENT_SECRET', "70d1e5a42624734f4212ae3228c996ebccf2a998ad"),
+    'password_timeout' => 10800
 ];

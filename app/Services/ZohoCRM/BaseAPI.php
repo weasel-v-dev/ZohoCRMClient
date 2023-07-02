@@ -13,19 +13,22 @@ abstract class BaseAPI
     protected function refresh()
     {
         $httpAPI = new HttpAPI();
+        $user = Auth::user();
+
+
 
         $response = $httpAPI->client->request('POST', 'https://accounts.zoho.eu/oauth/v2/token', [
             "form_params" => [
-                "refresh_token" => config('auth.refresh_token'),
-                "client_id" => config('auth.client_id'),
-                "client_secret" => config('auth.client_secret'),
+                "refresh_token" => $user->refresh_token,
+                "client_id" => $user->client_id,
+                "client_secret" => $user->client_secret,
                 'grant_type' => 'refresh_token'
             ]
         ]);
 
         $access_token = json_decode($response->getBody()->getContents(), true)['access_token'];
 
-        Auth::user()->update(['access_token' => $access_token]);
+        $user->update(['access_token' => $access_token]);
     }
 
     protected function sendRequest($url, $data) {
