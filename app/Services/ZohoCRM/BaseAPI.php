@@ -5,17 +5,16 @@ namespace App\Services\ZohoCRM;
 use App\Components\HttpAPI;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 abstract class BaseAPI
 {
 
     protected function refresh()
     {
+        //Automatic token refresh mechanism for uninterrupted creation of records
+
         $httpAPI = new HttpAPI();
         $user = Auth::user();
-
-
 
         $response = $httpAPI->client->request('POST', 'https://accounts.zoho.eu/oauth/v2/token', [
             "form_params" => [

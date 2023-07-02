@@ -37,8 +37,12 @@ class ZohoCRMFacade
 
         $dealCreatedData = $deal->create([
             "Deal_Name" => $data['dealName'],
+
+            // Linking of the account and deal records in Zoho CRM
             "Account_Name" => $data['accountName'],
             "Account_ID" => $accountCreatedData['data']['0']['details']['id'],
+            //
+
             "Deal_Owner" => $data['dealOwner'],
             "Type" => $data['accountType'],
             "Description" => $data['dealDescription'],

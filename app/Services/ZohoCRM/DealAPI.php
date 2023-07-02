@@ -9,6 +9,7 @@ class DealAPI extends BaseAPI
 {
     public function create($data = [])
     {
+        //Create a deal in Zoho CRM
         $result = $this->sendRequest('https://www.zohoapis.eu/crm/v2/Deals', $data);
 
         if(!empty($result['status']) && $result['status'] === 'error') {
