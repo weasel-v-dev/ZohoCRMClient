@@ -11,26 +11,42 @@ class ZohoCRMFacade
         $accountCreatedData = $account->create([
             "Account_Name" => $data['accountName'],
             "Account_Owner" => $data['accountOwner'],
-            "Account_Type" => $data['accountType'],
-            "Billing_City" => $data['billingStreet'],
+
             "Shipping_Street" => $data['shippingStreet'],
+            "Shipping_City" => $data['shippingCity'],
+            "Shipping_State" => $data['shippingState'],
+            "Shipping_Code" => $data['shippingCode'],
+            "Shipping_Country" => $data['shippingCountry'],
+            "Billing_Street" => $data['billingStreet'],
+            "Billing_City" => $data['billingCity'],
+            "Billing_State" => $data['billingState'],
+            "Billing_Code" => $data['billingCode'],
+            "Billing_Country" => $data['billingCountry'],
+
+            "Account_Number" => $data['accountNumber'],
+            "Account_Type" => $data['accountType'],
             "Phone" => $data['phone'],
             "Email" => $data['email'],
             "Website" => $data['website'],
-            "Industry" => $data['industry']
+            "Account_Site" => $data['accountSite'],
+            "Annual_Revenue" => $data['annualRevenue'],
+            "Fax" => $data['fax'],
+            "Industry" => $data['industry'],
+            "Description" => $data['description']
         ]);
-
 
         $dealCreatedData = $deal->create([
             "Deal_Name" => $data['dealName'],
             "Account_Name" => $data['accountName'],
             "Account_ID" => $accountCreatedData['data']['0']['details']['id'],
             "Deal_Owner" => $data['dealOwner'],
+            "Type" => $data['accountType'],
+            "Description" => $data['dealDescription'],
             "Amount" => $data['amount'],
             "Stage" => $data['stage'],
             "Closing_Date" => $data['closingDate'],
             "Probability" => $data['probability'],
-            "Description" => $data['dealDescription']
+            "Lead_Source" => $data['leadSource']
         ]);
 
         return [

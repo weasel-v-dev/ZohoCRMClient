@@ -36,8 +36,38 @@
 
                         <validation-provider
                             v-slot="{ errors }"
+                            name="LeadSource"
+                            rules="required"
+                        >
+                            <v-select
+                                v-model="leadSource"
+                                :items="['-None-',
+                                'Advertisement',
+                                'Cold Call',
+                                'Employee Referral',
+                                'External Referral',
+                                'Partner',
+                                'Online Store',
+                                'Public Relations',
+                                'Trade Show',
+                                'Sales Email Alias',
+                                'Seminar Partner',
+                                'Internal Seminar',
+                                'Web Download',
+                                'Web Research',
+                                'Chat',
+                                ]"
+                                :error-messages="errors"
+                                label="Lead source"
+                                data-vv-name="select"
+                                required
+                            ></v-select>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
                             name="Amount"
-                            rules="required|max:50|integer"
+                            rules="required|max:16|integer"
                         >
                             <v-text-field
                                 v-model="amount"
@@ -94,6 +124,21 @@
 
                         <validation-provider
                             v-slot="{ errors }"
+                            name="accountType"
+                            rules="required"
+                        >
+                            <v-select
+                                v-model="accountType"
+                                :items="['Existing Business', 'New Business']"
+                                :error-messages="errors"
+                                label="Account type"
+                                data-vv-name="select"
+                                required
+                            ></v-select>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
                             name="dealDescription"
                             rules="required|max:500"
                         >
@@ -134,44 +179,41 @@
 
                         <validation-provider
                             v-slot="{ errors }"
-                            name="accountType"
-                            rules="required"sdfdsfdsfdsf
-                        >
-                            <v-select
-                                v-model="accountType"
-                                :items="['Existing Business', 'New Business']"
-                                :error-messages="errors"
-                                label="Account type"
-                                data-vv-name="select"
-                                required
-                            ></v-select>
-                        </validation-provider>
-
-                        <validation-provider
-                            v-slot="{ errors }"
-                            name="BillingAddress"
-                            rules="required|max:50"
+                            name="AccountNumber"
+                            rules="integer"
                         >
                             <v-text-field
-                                v-model="billingStreet"
+                                v-model="accountNumber"
                                 :error-messages="errors"
-                                label="Billing street"
-                                required
+                                label="Account number"
                             ></v-text-field>
                         </validation-provider>
 
                         <validation-provider
                             v-slot="{ errors }"
-                            name="ShippingAddress"
-                            rules="required|max:50"
+                            name="Fax"
+                            rules="required|max:16|integer"
                         >
                             <v-text-field
-                                v-model="shippingStreet"
+                                v-model="fax"
                                 :error-messages="errors"
-                                label="Shipping street"
-                                required
+                                label="Fax"
                             ></v-text-field>
                         </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="AccountSite"
+                            rules="required|integer"
+                        >
+                            <v-text-field
+                                v-model="annualRevenue"
+                                :error-messages="errors"
+                                label="Annual Revenue"
+                            ></v-text-field>
+                        </validation-provider>
+
+
 
                         <validation-provider
                             v-slot="{ errors }"
@@ -213,7 +255,22 @@
                             <v-text-field
                                 v-model="website"
                                 :error-messages="errors"
-                                label="Account Website"
+                                label="Account website"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="AccountSite"
+                            :rules="{
+                      required: true,
+                      regex: 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)'
+                    }">
+                            <v-text-field
+                                v-model="accountSite"
+                                :error-messages="errors"
+                                label="Account Site"
                                 required
                             ></v-text-field>
                         </validation-provider>
@@ -231,6 +288,154 @@
                             ></v-text-field>
                         </validation-provider>
 
+                        <h3><b>Address information</b></h3>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="BillingStreet"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="billingStreet"
+                                :error-messages="errors"
+                                label="Billing street"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="BillingStreet"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="billingCity"
+                                :error-messages="errors"
+                                label="Billing city"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="BillingStreet"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="billingState"
+                                :error-messages="errors"
+                                label="Billing state"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="billingCode"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="billingCode"
+                                :error-messages="errors"
+                                label="Billing code"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="billingCountry"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="billingCountry"
+                                :error-messages="errors"
+                                label="Billing country"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="shippingStreet"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="shippingStreet"
+                                :error-messages="errors"
+                                label="Shipping street"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="shippingCity"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="shippingCity"
+                                :error-messages="errors"
+                                label="Shipping city"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="shippingState"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="shippingState"
+                                :error-messages="errors"
+                                label="Shipping state"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="shippingCode"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="shippingCode"
+                                :error-messages="errors"
+                                label="Shipping code"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="shippingCountry"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="shippingCountry"
+                                :error-messages="errors"
+                                label="Shipping country"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <h3><b>Description information</b></h3>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="description"
+                            rules="required|max:500"
+                        >
+                            <v-textarea
+                                v-model="description"
+                                :error-messages="errors"
+                                label="description"
+                                required
+                            ></v-textarea>
+                        </validation-provider>
+
                         <validation-provider
                             v-slot="{ errors }"
                             rules="required"
@@ -240,7 +445,7 @@
                                 v-model="checkbox"
                                 :error-messages="errors"
                                 value="1"
-                                label="Option"
+                                label="Do you agree completely?"
                                 type="checkbox"
                                 required
                             ></v-checkbox>
@@ -259,40 +464,40 @@
                 </div>
             </form>
         </validation-observer>
-        <div v-if="account">
-            <v-card
-                class="mx-auto"
-                max-width="344"
-            >
-                <v-card-text>
-                    <div>ID {{ account }}</div>
-                    <p class="text-h4 text--primary">
-                        {{ account.code }}
-                    </p>
-                    <p>{{ account.details.Created_By.name }}</p>
-                    <div class="text--primary">
-                        Created {{  account.details.Created_Time }}
-                    </div>
-                </v-card-text>
-            </v-card>
-        </div>
-        <div v-if="deal">
-            <v-card
-                class="mx-auto"
-                max-width="344"
-            >
-                <v-card-text>
-                    <div>ID {{ deal.id }}</div>
-                    <p class="text-h4 text--primary">
-                        {{ deal.code }}
-                    </p>
-                    <p>{{ deal.details.Created_By.name }}</p>
-                    <div class="text--primary">
-                        Created {{  deal.details.Created_Time }}
-                    </div>
-                </v-card-text>
-            </v-card>
-        </div>
+<!--        <div v-if="account">-->
+<!--            <v-card-->
+<!--                class="mx-auto"-->
+<!--                max-width="344"-->
+<!--            >-->
+<!--                <v-card-text>-->
+<!--                    <div>ID {{ account }}</div>-->
+<!--                    <p class="text-h4 text&#45;&#45;primary">-->
+<!--                        {{ account.code }}-->
+<!--                    </p>-->
+<!--                    <p>{{ account.details.Created_By.name }}</p>-->
+<!--                    <div class="text&#45;&#45;primary">-->
+<!--                        Created {{  account.details.Created_Time }}-->
+<!--                    </div>-->
+<!--                </v-card-text>-->
+<!--            </v-card>-->
+<!--        </div>-->
+<!--        <div v-if="deal">-->
+<!--            <v-card-->
+<!--                class="mx-auto"-->
+<!--                max-width="344"-->
+<!--            >-->
+<!--                <v-card-text>-->
+<!--                    <div>ID {{ deal.id }}</div>-->
+<!--                    <p class="text-h4 text&#45;&#45;primary">-->
+<!--                        {{ deal.code }}-->
+<!--                    </p>-->
+<!--                    <p>{{ deal.details.Created_By.name }}</p>-->
+<!--                    <div class="text&#45;&#45;primary">-->
+<!--                        Created {{  deal.details.Created_Time }}-->
+<!--                    </div>-->
+<!--                </v-card-text>-->
+<!--            </v-card>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -350,19 +555,38 @@ export default {
     data: () => ({
         dealName: '',
         dealOwner: '',
+        leadSource: '',
 
         amount: '',
+        annualRevenue: '',
+        accountNumber: 0,
+        accountSite: '',
+        fax: '',
         stage: '',
         closingDate: '',
         probability: '',
+        description: '',
         dealDescription: '',
 
 
         accountName: '',
         accountOwner: '',
         accountType: '',
+
+
         shippingStreet: '',
+        shippingCity: '',
+        shippingState: '',
+        shippingCode: '',
+        shippingCountry: '',
         billingStreet: '',
+        billingCity: '',
+        billingState: '',
+        billingCode: '',
+        billingCountry: '',
+
+
+
         phone: '',
         email: '',
         website: '',
@@ -383,18 +607,36 @@ export default {
             this.dealName = ''
 
             this.dealOwner = ''
+            this.leadSource = ''
             this.amount = ''
+            this.accountNumber = ''
+            this.accountSite = ''
+            this.fax = ''
             this.stage = ''
             this.closingDate = ''
             this.probability = ''
+            this.description = ''
             this.dealDescription = ''
 
 
             this.accountName = ''
             this.accountOwner = ''
             this.accountType = ''
+
+
             this.shippingStreet = ''
+            this.shippingCity = ''
+            this.shippingState = ''
+            this.shippingCode = ''
+            this.shippingCountry = ''
             this.billingStreet = ''
+            this.billingCity = ''
+            this.billingState = ''
+            this.billingCode = ''
+            this.billingCountry = ''
+            this.annualRevenue = ''
+
+
             this.phone = ''
             this.email = ''
             this.website = ''
@@ -408,18 +650,38 @@ export default {
             form.dealName = this.dealName;
 
             form.dealOwner = this.dealOwner;
+            form.leadSource = this.leadSource;
             form.amount = this.amount;
+            form.accountNumber = this.accountNumber;
+            form.fax = this.fax;
+            form.accountSite = this.accountSite;
             form.stage = this.stage;
             form.closingDate = this.closingDate;
             form.probability = this.probability;
+            form.description = this.description;
             form.dealDescription = this.dealDescription;
+            form.annualRevenue = this.annualRevenue;
 
 
             form.accountName = this.accountName;
             form.accountOwner = this.accountOwner;
             form.accountType = this.accountType;
-            form.shippingStreet = this.shippingStreet;
-            form.billingStreet = this.billingStreet;
+
+
+            form.shippingStreet = this.shippingStreet
+            form.shippingCity = this.shippingCity
+            form.shippingState = this.shippingState
+            form.shippingCode = this.shippingCode
+            form.shippingCountry = this.shippingCountry
+            form.billingStreet = this.billingStreet
+            form.billingCity = this.billingCity
+            form.billingState = this.billingState
+            form.billingCode = this.billingCode
+            form.billingCountry = this.billingCountry
+
+
+
+
             form.phone = this.phone;
             form.email = this.email;
             form.website = this.website;
