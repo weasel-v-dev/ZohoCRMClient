@@ -35,7 +35,7 @@ class ZohoCRMFacade
             "Description" => $data['description'],
 
             'Rating'  => $data['rating'],
-            'TicketSymbol' =>  $data['ticketSymbol'],
+            'TickerSymbol' =>  $data['ticketSymbol'],
             'Ownership'  => $data['ownership'],
             'Employees'  => $data['employees'],
             'SIC_Code'  => $data['SICCode'],
