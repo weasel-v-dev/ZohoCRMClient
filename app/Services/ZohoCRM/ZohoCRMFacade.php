@@ -32,7 +32,13 @@ class ZohoCRMFacade
             "Annual_Revenue" => $data['annualRevenue'],
             "Fax" => $data['fax'],
             "Industry" => $data['industry'],
-            "Description" => $data['description']
+            "Description" => $data['description'],
+
+            'Rating'  => $data['rating'],
+            'TicketSymbol' =>  $data['ticketSymbol'],
+            'Ownership'  => $data['ownership'],
+            'Employees'  => $data['employees'],
+            'SIC_Code'  => $data['SICCode'],
         ]);
 
         $dealCreatedData = $deal->create([

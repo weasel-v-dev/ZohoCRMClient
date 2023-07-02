@@ -180,7 +180,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="AccountNumber"
-                            rules="integer"
+                            rules="integer|max:18"
                         >
                             <v-text-field
                                 v-model="accountNumber"
@@ -204,7 +204,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="AccountSite"
-                            rules="required|integer"
+                            rules="required|integer|max:16"
                         >
                             <v-text-field
                                 v-model="annualRevenue"
@@ -213,7 +213,87 @@
                             ></v-text-field>
                         </validation-provider>
 
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="Rating"
+                            rules="required"
+                        >
+                            <v-select
+                                v-model="rating"
+                                :items="['-None-',
+                                'Acquired',
+                                'Active',
+                                'Market Failed',
+                                'Project Cancelled',
+                                'Shut Down'
+                                ]"
+                                :error-messages="errors"
+                                label="Rating"
+                                data-vv-name="select"
+                                required
+                            ></v-select>
+                        </validation-provider>
 
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="TicketSymbol"
+                            rules="required|max:50"
+                        >
+                            <v-text-field
+                                v-model="ticketSymbol"
+                                :error-messages="errors"
+                                label="Ticket Symbol"
+                                required
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="Ownership"
+                            rules="required"
+                        >
+                            <v-select
+                                v-model="ownership"
+                                :items="['-None-',
+                                'Other',
+                                'Private',
+                                'Public',
+                                'Subsidiary',
+                                'Partnership',
+                                'Government',
+                                'Privately Held',
+                                'Public Company',
+                                ]"
+                                :error-messages="errors"
+                                label="Ownership"
+                                data-vv-name="select"
+                                required
+                            ></v-select>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="Employees"
+                            rules="required|max:9|integer"
+                        >
+                            <v-text-field
+                                v-model="employees"
+                                :error-messages="errors"
+                                label="Employees"
+                            ></v-text-field>
+                        </validation-provider>
+
+                        <validation-provider
+                            v-slot="{ errors }"
+                            name="SICCode"
+                            rules="required|max:9|integer"
+                        >
+                            <v-text-field
+                                v-model="SICCode"
+                                :error-messages="errors"
+                                label="SIC Code"
+                            ></v-text-field>
+                        </validation-provider>
 
                         <validation-provider
                             v-slot="{ errors }"
@@ -331,7 +411,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="billingCode"
-                            rules="required|max:50|integer"
+                            rules="required|max:30|integer"
                         >
                             <v-text-field
                                 v-model="billingCode"
@@ -397,7 +477,7 @@
                         <validation-provider
                             v-slot="{ errors }"
                             name="shippingCode"
-                            rules="required|max:50|integer"
+                            rules="required|max:30|integer"
                         >
                             <v-text-field
                                 v-model="shippingCode"
@@ -470,7 +550,7 @@
             density="compact"
             v-for="item in response"
             :value="item.message"
-            :color="item.status === 'SUCCESS' ? 'green green-accent-4' : 'red darken-1'"
+            :color="item.code === 'SUCCESS' ? 'green green-accent-4' : 'red darken-1'"
             :key="item.id"
         >
             <span class="font-weight-medium">{{ item.status }}</span>
@@ -570,6 +650,12 @@ export default {
         website: '',
         industry: '',
 
+        rating: '',
+        ticketSymbol: '',
+        ownership: '',
+        employees: '',
+        SICCode: '',
+
 
         checkbox: null,
         triggerModalDate: false,
@@ -579,8 +665,6 @@ export default {
                 message: '',
             }
         ],
-        account: '',
-        deal: ''
     }),
 
     methods: {
@@ -626,6 +710,12 @@ export default {
             this.website = ''
             this.industry = ''
 
+            this.rating = ''
+            this.ticketSymbol = ''
+            this.ownership = ''
+            this.employees = ''
+            this.SICCode = ''
+
             this.checkbox = null
             this.$refs.observer.reset()
         },
@@ -646,11 +736,9 @@ export default {
             form.dealDescription = this.dealDescription;
             form.annualRevenue = this.annualRevenue;
 
-
             form.accountName = this.accountName;
             form.accountOwner = this.accountOwner;
             form.accountType = this.accountType;
-
 
             form.shippingStreet = this.shippingStreet
             form.shippingCity = this.shippingCity
@@ -663,25 +751,34 @@ export default {
             form.billingCode = this.billingCode
             form.billingCountry = this.billingCountry
 
-
-
-
             form.phone = this.phone;
             form.email = this.email;
             form.website = this.website;
             form.industry = this.industry;
+
+            form.rating = this.rating;
+            form.ticketSymbol = this.ticketSymbol;
+            form.ownership = this.ownership;
+            form.employees = this.employees;
+            form.SICCode = this.SICCode;
+
             axios.post('/account', form).then(({ data }) => {
-                this.notify(data, data.response.account);
-                this.notify(data, data.response.deal);
+                this.validateOfZohoCRM(data, data.response.account);
+                this.validateOfZohoCRM(data, data.response.deal);
             }).catch(function (rej ) {
-                console.log('rej', rej)
+                // console.log('rej', rej.errors)
+                //
+                // for (const error in rej.errors) {
+                //     error
+                // }
             }).finally(function (mes){
                 console.log('mes', mes)
             })
         },
-        notify(data, record) {
+        validateOfZohoCRM(data, record) {
             if (record.data['0'].code === "INVALID_DATA") {
                 this.response.push({
+                    code: record.data['0'].code,
                     status: record.data['0'].status,
                     message: record.data['0'].details.api_name + ': '
                         + record.data['0'].details.expected_data_type
@@ -689,6 +786,7 @@ export default {
             }
             else {
                 this.response.push({
+                    code: record.data['0'].code,
                     status: record.data['0'].status,
                     message: record.data['0'].message
                 }) ;
