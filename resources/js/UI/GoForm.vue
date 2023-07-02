@@ -463,40 +463,19 @@
                 </div>
             </form>
         </validation-observer>
-<!--        <div v-if="account">-->
-<!--            <v-card-->
-<!--                class="mx-auto"-->
-<!--                max-width="344"-->
-<!--            >-->
-<!--                <v-card-text>-->
-<!--                    <div>ID {{ account }}</div>-->
-<!--                    <p class="text-h4 text&#45;&#45;primary">-->
-<!--                        {{ account.code }}-->
-<!--                    </p>-->
-<!--                    <p>{{ account.details.Created_By.name }}</p>-->
-<!--                    <div class="text&#45;&#45;primary">-->
-<!--                        Created {{  account.details.Created_Time }}-->
-<!--                    </div>-->
-<!--                </v-card-text>-->
-<!--            </v-card>-->
-<!--        </div>-->
-<!--        <div v-if="deal">-->
-<!--            <v-card-->
-<!--                class="mx-auto"-->
-<!--                max-width="344"-->
-<!--            >-->
-<!--                <v-card-text>-->
-<!--                    <div>ID {{ deal.id }}</div>-->
-<!--                    <p class="text-h4 text&#45;&#45;primary">-->
-<!--                        {{ deal.code }}-->
-<!--                    </p>-->
-<!--                    <p>{{ deal.details.Created_By.name }}</p>-->
-<!--                    <div class="text&#45;&#45;primary">-->
-<!--                        Created {{  deal.details.Created_Time }}-->
-<!--                    </div>-->
-<!--                </v-card-text>-->
-<!--            </v-card>-->
-<!--        </div>-->
+        <v-snackbar
+            :timeout="3000"
+            value="rounded"
+            tile
+            density="compact"
+            v-for="item in response"
+            :value="item.message"
+            :color="item.status === 'SUCCESS' ? 'green green-accent-4' : 'red darken-1'"
+            :key="item.id"
+        >
+            <span class="font-weight-medium">{{ item.status }}</span>
+            <span class="caption">{{ item.message }}</span>
+        </v-snackbar>
     </div>
 </template>
 
@@ -594,6 +573,12 @@ export default {
 
         checkbox: null,
         triggerModalDate: false,
+        response: [
+            {
+                status: '',
+                message: '',
+            }
+        ],
         account: '',
         deal: ''
     }),
@@ -686,13 +671,29 @@ export default {
             form.website = this.website;
             form.industry = this.industry;
             axios.post('/account', form).then(({ data }) => {
-                this.account = data.response.account.data['0'];
-                this.deal = data.response.deal.data['0'];
+                this.notify(data, data.response.account);
+                this.notify(data, data.response.deal);
             }).catch(function (rej ) {
                 console.log('rej', rej)
             }).finally(function (mes){
                 console.log('mes', mes)
             })
+        },
+        notify(data, record) {
+            if (record.data['0'].code === "INVALID_DATA") {
+                this.response.push({
+                    status: record.data['0'].status,
+                    message: record.data['0'].details.api_name + ': '
+                        + record.data['0'].details.expected_data_type
+                });
+            }
+            else {
+                this.response.push({
+                    status: record.data['0'].status,
+                    message: record.data['0'].message
+                }) ;
+                this.clear();
+            }
         }
     }
 }
