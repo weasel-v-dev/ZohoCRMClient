@@ -7,7 +7,7 @@
                 </div>
                 <div class="p-3 kh-bg">
                     <div class="">
-                        <h1 class="large fw-semibold">You can register here using your own data from ZohoCRM account or use my data is below</h1>
+                        <h1 class="large fw-semibold">You can register here using your own data from ZohoCRM account or use my data for register that is below</h1>
                         <p>
                             Email: <span class="blue">madara.prog@gmail.com</span>
                         </p>
