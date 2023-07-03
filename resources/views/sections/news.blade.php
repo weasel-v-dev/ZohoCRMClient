@@ -9,12 +9,6 @@
                     <div class="">
                         <h1 class="large fw-semibold">You can register here using your own data from ZohoCRM account or use my data for register that is below</h1>
                         <p>
-                            Email: <span class="blue">madara.prog@gmail.com</span>
-                        </p>
-                        <p>
-                            Password: <span class="blue">&DNol26l140n7Y</span>
-                        </p>
-                        <p>
                             Refresh token: <span class="blue">1000.f4d1b6b8fe7c0b75054dac1322d3a884.cd8e026be3fb24b0934083ea002b49ee</span>
                         </p>
                         <p>
