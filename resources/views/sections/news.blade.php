@@ -17,7 +17,7 @@
                         <p>
                             Client secret: <span class="blue">70d1e5a42624734f4212ae3228c996ebccf2a998ad</span>
                         </p>
-                        <h2>The data is for log in ZohoCRM</h2>
+                        <h2 class="large fw-semibold">The data is for log in ZohoCRM</h2>
                         <p>
                             Email: <span class="blue">madara.prog@gmail.com</span>
                         </p>
