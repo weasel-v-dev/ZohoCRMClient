@@ -31,7 +31,6 @@ abstract class BaseAPI
     }
 
     protected function sendRequest($url, $data) {
-        sleep(1);
         $access_token = Auth::user()->access_token;
 
         return Http::withHeaders([
